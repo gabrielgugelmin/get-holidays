@@ -13,11 +13,18 @@ function SelectCountries({ callback }) {
 			key,
 			value: response[key],
 		}));
+
+		data.sort((a, b) => {
+			if (a.value < b.value) { return -1; }
+			if (a.value > b.value) { return 1; }
+			return 0;
+		})
 		setCountries(data);
 	}, []);
 
 	useEffect(() => {
-		callback(country);
+		const option = countries.filter(c => c.value === country.value)[0];
+		callback(option);
 	}, [country]);
 
 	return (
@@ -32,7 +39,7 @@ function SelectCountries({ callback }) {
 export default SelectCountries;
 
 SelectCountries.defaultProps = {
-	callback: () => {},
+	callback: () => { },
 };
 
 SelectCountries.propTypes = {

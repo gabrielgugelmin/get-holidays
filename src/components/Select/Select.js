@@ -1,24 +1,27 @@
-import PropTypes from 'prop-types';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
+import StyledSelect from './styles';
 
 function Select({ options, callback, ...props }) {
-	const [currentOption, setCurrentOption] = useState({});
+	const [currentOption, setCurrentOption] = useState('');
 
 	const handleChange = (e) => {
+		const { value } = e.target;
+		const { selectedIndex } = e.target.options;
+		const key = e.target.options[selectedIndex].getAttribute('data-key');
 		const option = {
-			name: e.target.name,
-			value: e.target.value,
-		};
-		setCurrentOption(option);
+			key,
+			value
+		}
 
+		setCurrentOption(option);
 		if (callback) callback(option);
 	};
 
 	return (
-		<select
+		<StyledSelect
 			{...props}
 			value={currentOption.value}
-			defaultValue="default"
 			onChange={(e) => handleChange(e)}
 		>
 			{options?.length > 0 && (
@@ -27,13 +30,13 @@ function Select({ options, callback, ...props }) {
 						Selecione um país
 					</option>
 					{options.map((option) => (
-						<option name={option.value} key={option.key}>
+						<option value={option.value} key={option.key} data-key={option.key}>
 							{option.value}
 						</option>
 					))}
 				</>
 			)}
-		</select>
+		</StyledSelect>
 	);
 }
 
@@ -44,7 +47,7 @@ Select.defaultProps = {
 		value: '',
 		key: '',
 	}),
-	callback: () => {},
+	callback: () => { },
 };
 
 Select.propTypes = {

@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
+import StyledTitle from './styles';
 
 function Title({ children }) {
-	return <h1>{children}</h1>;
+	return <StyledTitle>{children}</StyledTitle>;
 }
 
 export default Title;

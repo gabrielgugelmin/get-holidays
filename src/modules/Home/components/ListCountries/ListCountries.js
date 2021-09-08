@@ -1,15 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Holidays from '../../../../data/Holidays';
+import HolidaysService from '../../../../data/Holidays';
+import Item from './components/Item'
+import { Wrapper } from './styles';
 
 function ListCountries({ country }) {
+	const [holidays, setHolidays] = useState([])
 	useEffect(() => {
-		const hd = Holidays(country?.key);
-
-		console.log(hd.getHolidays(new Date().getFullYear()));
+		const hd = HolidaysService(country?.key);
+		setHolidays(hd.getHolidays(new Date().getFullYear()));
 	}, [country]);
 
-	return <p>{country.value}</p>;
+	return (
+		<Wrapper>
+			{holidays.map((holiday) => (
+				<Item name={holiday.name} date={holiday.date} key={holiday.name} />
+			))}
+		</Wrapper>
+	);
 }
 
 export default ListCountries;

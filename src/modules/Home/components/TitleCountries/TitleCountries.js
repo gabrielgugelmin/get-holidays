@@ -16,9 +16,16 @@ function TitleCountries({ country }) {
 
 export default TitleCountries;
 
+TitleCountries.defaultProps = {
+	country: {
+		key: '',
+		value: '',
+	},
+};
+
 TitleCountries.propTypes = {
 	country: PropTypes.shape({
 		key: PropTypes.string,
 		value: PropTypes.string,
-	}).isRequired,
+	}),
 };
